@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConnection from '../helpers/data/connection';
 
+import Auth from '../components/pages/Auth/Auth'
 import Navbar from '../components/shared/Navbar/Navbar';
 import './App.scss';
 
@@ -30,6 +31,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar />
+        <Auth />
       </div>
     );
   }
