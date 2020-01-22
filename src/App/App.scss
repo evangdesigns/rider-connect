@@ -1,13 +1,11 @@
 .App {
   text-align: center;
-  .sideBar {
-    position: absolute;
-    z-index: 100;
+  .sidebar.open {
     right: 0;
-    width: 30%;
-    height:100%;
-    background-color: #333333;
   }
+  .content.open {
+    left: 300px;
+}
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,0 +1,10 @@
+.sidebar {
+  position: absolute;
+  z-index:10;
+  right: -300px;
+  width: 300px;
+  height:100%;
+  color:#fff;
+  background-color: #333333;
+  transition: right .3s ease-in-out;
+}
