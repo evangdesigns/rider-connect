@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -22,10 +22,10 @@ class Navbar extends React.Component {
         return (
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <button className="nav-link" to="/routes/add">+ ROUTE</button>
+              <Link className="nav-link" to="/routes/add">+ ROUTE</Link>
             </li>
             <li className="nav-item">
-              <button className="nav-link" to="/profile">PROFILE</button>
+              <Link className="nav-link" to="/profile">PROFILE</Link>
             </li>
             <li className="nav-item">
               <button className="nav-link btn btn-link" onClick={this.logMeOut}>LOGOUT</button>
@@ -34,15 +34,21 @@ class Navbar extends React.Component {
         );
       }
 
-      return (<ul className="navbar-nav ml-auto" to="/login">LOGIN</ul>);
+      return (
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/login">LOGIN</Link>
+          </li>
+        </ul>
+      );
     };
 
     return (
       <div className="Navbar">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="#">
-            <img src="https://github.com/evangdesigns/rider-connect/blob/master/src/images/riderConnect_navLogo.png?raw=true" width="300" alt="RiderConnect" />
-          </a>
+          <Link class="navbar-brand" to="/">
+            <img src="https://github.com/evangdesigns/rider-connect/blob/master/src/images/riderConnect_navLogo.png?raw=true" width="200" alt="RiderConnect" />
+          </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
