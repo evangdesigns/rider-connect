@@ -22,6 +22,6 @@ const getProfileByUid = (uid) => new Promise((resolve, reject) => {
     });
 });
 
-const getProfile = (uid) => axios.get(`${baseUrl}/profile.json?orderBy="uid"&equalTo="${uid}`);
+const updateProfile = (profileId, updatedProfile) => axios.put(`${baseUrl}/profile/${profileId}.json`, updatedProfile);
 
-export default { getProfileByUid, getProfile };
+export default { getProfileByUid, updateProfile };

@@ -3,16 +3,12 @@
      "firstName": "Evan",
      "lastName": "Grabenstein",
      "imageUrl": "https://avatars2.githubusercontent.com/u/26425684?s=460&v=4",
-     "email": "evangdesigns@gmail.com",
-     "isOnline": false,
      "uid": "oegv87menwVcGMMNNH1EqawZQAA3"
   },
   "user2": {
     "firstName": "Marty",
     "lastName": "McFly",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/Michael_J._Fox_as_Marty_McFly_in_Back_to_the_Future%2C_1985.jpg/220px-Michael_J._Fox_as_Marty_McFly_in_Back_to_the_Future%2C_1985.jpg",
-    "email": "mcfly@gmail.com",
-    "isOnline": false,
     "uid": "1234"
   }
 }
