@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 // import UserMotorcycles from '../../pages/UserMotorcycles/UserMotorcycles';
 
 import profileData from '../../../helpers/data/profileData';
@@ -27,8 +27,10 @@ class Profile extends React.Component {
     console.log(profile);
     return (
       <div className="Profile">
-        <img src={profile.imageUrl} alt={profile.name} />
-
+        <Link className="btn btn-link" to="/profile/edit">EDIT</Link>
+        <div>
+          <img src={profile.imageUrl} alt={profile.name} />
+        </div>
         <h3>{profile.firstName} {profile.lastName}</h3>
         <hr />
         <div className="User Motorcycles">
