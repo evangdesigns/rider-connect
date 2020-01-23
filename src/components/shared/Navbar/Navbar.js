@@ -48,7 +48,7 @@ class Navbar extends React.Component {
     return (
       <div className="Navbar">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <Link class="navbar-brand" onClick={this.props.showSidebar} to="/">
+          <Link className="navbar-brand" onClick={this.props.showSidebar} to="/">
             <img src="https://github.com/evangdesigns/rider-connect/blob/master/src/images/riderConnect_navLogo.png?raw=true" width="200" alt="RiderConnect" />
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

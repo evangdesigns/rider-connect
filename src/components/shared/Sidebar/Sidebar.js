@@ -28,7 +28,6 @@ class Sidebar extends React.Component {
     let sidebarClassname = isOpen ? 'sidebar open' : 'sidebar';
     return (
       <div className={sidebarClassname}>
-        <h1>Sidebar</h1>
           <Switch>
             <PublicRoute path="/login" exact component={Auth} authed={authed} />
             <PrivateRoute path="/profile" exact component={Profile} authed={authed} />
