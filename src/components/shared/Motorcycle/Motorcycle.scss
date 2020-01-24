@@ -1,0 +1,19 @@
+.Motorcycle:not(:last-child) {
+  border-bottom: .5px dotted white !important;
+  padding-bottom: 10px;
+}
+.Motorcycle:not(:first-child) {
+  padding: 10px 0 0;
+}
+.Motorcycle {
+  .media-body {
+    text-align: left !important;
+  }
+  p {
+    font-size:12px;
+    line-height: 2px;
+  }
+  img {
+    width:75px !important;
+  }
+}
