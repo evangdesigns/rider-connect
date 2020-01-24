@@ -28,10 +28,10 @@ class App extends React.Component {
     });
   }
 
-  showSidebar = (clicked) => {
-    if (clicked) {
-      this.setState({ sidebarOpen: true });
-    }
+  toggelSidebar = () => {
+    this.setState(prevState => ({
+      sidebarOpen: !prevState.sidebarOpen
+    }));
   }
 
   componentWillUnmount() {
@@ -42,7 +42,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <Navbar authed={authed} showSidebar={this.showSidebar}/>
+          <Navbar authed={authed} toggelSidebar={this.toggelSidebar}/>
           <Sidebar isOpen={sidebarOpen} authed={authed} />
         </Router>
         <Map />

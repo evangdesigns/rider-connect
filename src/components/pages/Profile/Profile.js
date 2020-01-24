@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import UserMotorcycles from '../../pages/UserMotorcycles/UserMotorcycles';
+import UserMotorcycles from '../../pages/UserMotorcycle/UserMotorcycle';
 
 import profileData from '../../../helpers/data/profileData';
 import authData from '../../../helpers/data/authData';
@@ -24,18 +24,14 @@ class Profile extends React.Component {
 
   render() {
     const { profile } = this.state;
-    console.log(profile);
     return (
       <div className="Profile">
         <Link className="btn btn-link" to="/profile/edit">EDIT</Link>
         <div>
-          <img src={profile.imageUrl} alt={profile.name} />
+          <img className="profile-image" src={profile.imageUrl} alt={profile.name} />
         </div>
         <h3>{profile.firstName} {profile.lastName}</h3>
-        <hr />
-        <div className="User Motorcycles">
-        {/* <UserMotorcycles /> */}
-        </div>
+        <UserMotorcycles />
       </div>
     );
   }
