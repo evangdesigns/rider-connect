@@ -1,12 +1,15 @@
 import React from 'react';
 import authData from '../../../helpers/data/authData';
+
+import ProfileForm from '../ProfileForm/ProfileForm';
+import MotorcycleForm from '../../shared/MotorcycleForm/MotorcycleForm';
+
 import userMotoData from '../../../helpers/data/userMotorcycleData';
 import motoData from '../../../helpers/data/motorcycleData';
 
-import Motorcycle from '../../shared/Motorcycle/Motorcycle';
-import './UserMotorcycle.scss';
+import './FormsComp.scss';
 
-class UserMotorcycles extends React.Component {
+class FormComp extends React.Component {
   state = {
     motorcycles: [],
     userMotorcycles: [],
@@ -25,21 +28,29 @@ class UserMotorcycles extends React.Component {
       .catch((err) => console.error('error getting all motorcycles', err));
   }
 
+  deleteMotorcycle = (userMotorcycleId) => {
+    userMotoData.deleteUserMotorcycle(userMotorcycleId)
+      .then(() => this.getUserMotorcycleData(authData.getUid()))
+      .catch((err) => console.error('error deleting user motorcycle', err));
+  }
+
+
   render() {
-    const buildMotorcycles = () => {
+    const loopMotorcycles = () => {
       const { motorcycles, userMotorcycles } = this.state;
       return(userMotorcycles.map((userMotorcycle) => {
         const selectedMotorcycle = motorcycles.find((motorcycle) => motorcycle.id === userMotorcycle.motorcycleId);
-        return ((<Motorcycle key={userMotorcycle.id} motorcycle={selectedMotorcycle} />))
+        return ((<MotorcycleForm key={userMotorcycle.id} uMotoId={userMotorcycle.id} motorcycle={selectedMotorcycle} motorcycles={motorcycles} deleteMotorcycle={this.deleteMotorcycle}/>))
       }))
     }
 
     return (
-      <div className="UserMotorcycles justify-content-center">
-        {buildMotorcycles()}
+      <div className="FormComp">
+        <ProfileForm />
+        {loopMotorcycles()}
       </div>
     );
   }
 }
 
-export default UserMotorcycles;
+export default FormComp;

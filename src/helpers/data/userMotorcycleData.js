@@ -22,6 +22,12 @@ const getUserMotorcyclesByUid = (uid) => new Promise((resolve, reject) => {
     });
 });
 
+const saveMoto = (motoInfo) => axios.post(`${baseUrl}/userMotorcycle.json`, motoInfo);
+
+const updateMoto = (uMotoId, updatedMotorcycle) => axios.put(`${baseUrl}/usermotorcycle/${uMotoId}.json`, updatedMotorcycle);
+
 export default {
   getUserMotorcyclesByUid,
+  saveMoto,
+  updateMoto,
 };

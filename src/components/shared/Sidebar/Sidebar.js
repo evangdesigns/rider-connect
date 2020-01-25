@@ -8,7 +8,7 @@ import {
 
 import Auth from '../../pages/Auth/Auth';
 import Profile from '../../pages/Profile/Profile';
-import ProfileForm from '../../pages/ProfileForm/ProfileForm';
+import FormsComp from '../../pages/FormsComp/FormsComp';
 
 import './Sidebar.scss'
 
@@ -31,7 +31,7 @@ class Sidebar extends React.Component {
           <Switch>
             <PublicRoute path="/login" exact component={Auth} authed={authed} />
             <PrivateRoute path="/profile" exact component={Profile} authed={authed} />
-            <PrivateRoute path="/profile/edit" exact component={ProfileForm} authed={authed} />
+            <PrivateRoute path="/profile/edit" exact component={FormsComp} authed={authed} />
             {/* <PrivateRoute path="/route/new" exact component={RouteForm} authed={authed} /> */}
           </Switch>
       </div>
