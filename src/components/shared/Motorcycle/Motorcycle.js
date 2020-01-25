@@ -15,11 +15,9 @@ class Motorcycle extends React.Component {
     return (
       <div className="Motorcycle media align-middle">
         <div className="media-body">
-          <h6 className="motorcycle-title">{motorcycle.year}</h6>
-          <p>{motorcycle.make}</p>
-          <p>{motorcycle.model}</p>
+          <h6 className="motorcycle-title">{motorcycle.name}</h6>
         </div>
-        <img src={motorcycle.imageUrl} alt={motorcycle.model} />
+        <img src={motorcycle.imageUrl} alt={motorcycle.name} />
       </div>
     );
   }

@@ -50,7 +50,7 @@ class ProfileForm extends React.Component {
       uid: authData.getUid(),
     };
     profileData.updateProfile(profileId, updatedProfile)
-      .then(() => this.props.history.push(`/profile`))
+      .then(() => this.props.history.push('/profile'))
       .catch((errFromUpdateProfile) => console.error(errFromUpdateProfile));
   }
 
