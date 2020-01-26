@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import UserMotorcycles from '../../pages/UserMotorcycle/UserMotorcycle';
 
 import profileData from '../../../helpers/data/profileData';
@@ -26,7 +28,7 @@ class Profile extends React.Component {
     const { profile } = this.state;
     return (
       <div className="Profile">
-        <Link className="btn btn-link" to="/profile/edit">EDIT</Link>
+        <Link className="btn btn-link" to="/profile/edit"><FontAwesomeIcon icon={faEdit} size="lg" /></Link>
         <div>
           <img className="profile-image" src={profile.imageUrl} alt={profile.name} />
         </div>

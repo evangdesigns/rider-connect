@@ -1,0 +1,22 @@
+.FormComp {
+  text-align:center;
+  .edit-motorcycles {
+    text-align:left;
+    margin: 5px 0;
+    padding: 15px 0;
+    border-top: .5px solid white;
+    border-bottom: .5px solid white;
+  }
+  .close-edit {
+    position:absolute;
+    top:0;
+    right:0;
+  }
+  .btn.btn-link {
+    color: #ffffff;
+    &:hover {
+    color: #bb0004;
+    text-decoration: none;
+  }
+  }
+}
