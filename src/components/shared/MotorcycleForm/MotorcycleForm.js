@@ -1,12 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import authData from '../../../helpers/data/authData';
 import userMotoData from '../../../helpers/data/userMotorcycleData';
 
 import './MotorcycleForm.scss';
 
 class MotorcycleForm extends React.Component {
+  static propTypes = {
+    deleteMotorcycle: PropTypes.func,
+  }
+
   state = {
     selectedOption: null,
     motorcycleId: '',
@@ -14,8 +20,8 @@ class MotorcycleForm extends React.Component {
 
   componentDidMount() {
     const { motorcycles, motorcycle } = this.props;
+    const options = motorcycles.map((m) => ({ value: `${m.id}`, label: `${m.name}` }));
     const motoId = motorcycle.id;
-    const options = motorcycles.map((motorcycle) => ({ value: `${motorcycle.id}`, label: `${motorcycle.name}` }));
     if (motoId) {
       this.setState({ motorcycleId: motoId })
       const motoInput = options.find((option) => option.value === motoId);
@@ -23,55 +29,71 @@ class MotorcycleForm extends React.Component {
     }
   };
 
-  handleChange = selectedOption => {
-    this.setState({ selectedOption },
-      this.setState({motorcycleId: selectedOption.value})
-    );
-  };
-
-  updateMotoEvent = (e) => {
-    e.preventDefault();
+  updateMotoEvent = () => {
     const { motorcycleId } = this.state;
     const { uMotoId } = this.props;
     const updatedMotorcycle = {
       motorcycleId,
       uid: authData.getUid(),
     };
-    console.log(motorcycleId);
     userMotoData.updateMoto(uMotoId, updatedMotorcycle)
-      .then(() => this.props.history.push('/profile'))
+      .then()
       .catch((errFromUpdateMoto) => console.error(errFromUpdateMoto));
   }
 
-  saveMotoEvent = (e) => {
-    e.preventDefault();
+  addMotoEvent = () => {
     const {motorcycleId} = this.state;
     const newMotorcycle = {
       motorcycleId,
       uid: authData.getUid(),
     };
-    userMotoData.saveMoto(newMotorcycle)
-      .then(() => this.props.history.push('/profile'))
+    userMotoData.addMoto(newMotorcycle)
+      .then()
       .catch((errFromAddMoto) => console.error(errFromAddMoto));
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    this.setState({motorcycleId: selectedOption.value});
+    const { motorcycle } = this.props;
+    console.log(motorcycle);
+    if (motorcycle === 0) {
+      this.addMotoEvent()
+    }
+    this.updateMotoEvent();
+  };
+
+  deleteMotoEvent = (e) => {
+    e.preventDefault();
+    const { deleteMotorcycle, uMotoId } = this.props;
+    deleteMotorcycle(uMotoId);
   }
 
   render() {
     const { motorcycleId, selectedOption } = this.state
     const { motorcycles } = this.props;
     const options = motorcycles.map((motorcycle) => ({ value: `${motorcycle.id}`, label: `${motorcycle.name}` }));
+    const buttons = () => {
+      if (selectedOption != null) {
+        if (motorcycleId) {
+          return(<div className="update-btn col-2"><button className="btn btn-link" onClick={this.deleteMotoEvent}><FontAwesomeIcon icon={faTrash} size="sm" /></button></div>
+          )} else {
+          return(<button className="update-btn col-2" onClick={this.addMotoEvent}><FontAwesomeIcon icon={faCheck} size="lg" /></button>);
+        }
+      }
+    };
+
     return (
-      <div>
-      <Select className="Select"
-      value= {selectedOption}
-      defaultValue={selectedOption}
-      onChange={this.handleChange}
-      options={options}
-      isSearchable
-    />
-        { motorcycleId
-      ? <button className="btn btn-danger" onClick={this.updateMotoEvent}>UPDATE MOTO</button>
-      : <button className="btn btn-danger" onClick={this.saveMotoEvent}>SAVE MOTO</button>
-    }
+      <div className="Select">
+        <Select
+        className="moto-select col-10"
+        value={selectedOption}
+        defaultValue={selectedOption}
+        onChange={this.handleChange}
+        options={options}
+        isSearchable
+        />
+        {buttons()}
       </div>
     );
   }

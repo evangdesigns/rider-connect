@@ -42,8 +42,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <Navbar authed={authed} toggelSidebar={this.toggelSidebar}/>
-          <Sidebar isOpen={sidebarOpen} authed={authed} />
+            <Navbar authed={authed} toggelSidebar={this.toggelSidebar}/>
+            <Sidebar isOpen={sidebarOpen} authed={authed} />
         </Router>
         <Map />
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import authData from '../../../helpers/data/authData';
 import profileData from '../../../helpers/data/profileData';
@@ -6,6 +7,10 @@ import profileData from '../../../helpers/data/profileData';
 import './ProfileForm.scss';
 
 class ProfileForm extends React.Component {
+  static propTypes = {
+    routerMaker: PropTypes.func,
+  }
+
   state = {
     profileFName: '',
     profileLName: '',
@@ -50,17 +55,16 @@ class ProfileForm extends React.Component {
       uid: authData.getUid(),
     };
     profileData.updateProfile(profileId, updatedProfile)
-      .then(() => this.props.history.push('/profile'))
-      .catch((errFromUpdateProfile) => console.error(errFromUpdateProfile));
+    .then(() => this.props.routerMaker())
+    .catch((errFromUpdateProfile) => console.error(errFromUpdateProfile));
   }
 
   render() {
     const { profileFName, profileLName, profileImage } = this.state;
     return (
-      <div className="ProfileForm">
-      <form className="">
+      <form className="ProfileForm">
         <div className="form-group">
-          <label htmlFor="profile-image-url">Profile Name</label>
+          <label htmlFor="profile-image-url">Profile Image Url</label>
           <input
           type="text"
           className="form-control"
@@ -92,9 +96,8 @@ class ProfileForm extends React.Component {
           onChange={this.lastNameChange}
           />
         </div>
-        <button className="btn btn-danger" onClick={this.updateProfileEvent}>UPDATE PROFILE</button>
+        <button className="update-profile btn btn-danger btn-block" onClick={this.updateProfileEvent}>UPDATE PROFILE</button>
       </form>
-      </div>
     );
   }
 }

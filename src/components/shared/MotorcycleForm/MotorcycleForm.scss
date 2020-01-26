@@ -1,5 +1,24 @@
+.Select:not(:first-child) {
+  padding: 10px 0 0;
+}
+.Select:not(:last-child) {
+  border-bottom: .5px dotted white !important;
+  padding-bottom: 10px;
+}
 .Select {
   color:black;
   font-size: 13px;
   margin: 5px 0;
+  .moto-select{
+    display: inline-block;
+    position:relative;
+    left:0;
+    padding: 0 !important;
+  }
+  .update-btn {
+    display:inline-flex;
+  }
+  .btn.btn-link {
+    padding: 0 2px !important;
+  }
 }
