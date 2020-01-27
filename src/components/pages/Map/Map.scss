@@ -1,5 +1,39 @@
-.Map {
-  height:100vh;
+
+.sidebarStyle {
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 12px;
+  background-color: #404040;
+  color: #ffffff;
+  z-index: 1 !important;
+  padding: 6px;
+  font-weight: bold;
+}
+
+.mapContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index:-10;
+}
+
+.marker {
+  background-image: url('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png');
   background-size: cover;
-  background-image: url('https://github.com/evangdesigns/rider-connect/blob/master/src/images/mapPlaceholder.png?raw=true');
+  background-position: center center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-control-container {
+  .mapboxgl-ctrl-top-right {
+    position:absolute;
+    top:55px;
+  }
 }

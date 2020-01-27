@@ -12,6 +12,7 @@
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
     "firebase": "^7.6.2",
+    "mapbox-gl": "^1.6.1",
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",

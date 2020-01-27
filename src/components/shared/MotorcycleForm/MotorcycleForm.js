@@ -42,7 +42,7 @@ class MotorcycleForm extends React.Component {
   }
 
   addMotoEvent = () => {
-    const {motorcycleId} = this.state;
+    const { motorcycleId } = this.state;
     const newMotorcycle = {
       motorcycleId,
       uid: authData.getUid(),
@@ -52,15 +52,18 @@ class MotorcycleForm extends React.Component {
       .catch((errFromAddMoto) => console.error(errFromAddMoto));
   }
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    this.setState({motorcycleId: selectedOption.value});
+  addOrUpdate = () => {
     const { motorcycle } = this.props;
-    console.log(motorcycle);
     if (motorcycle === 0) {
       this.addMotoEvent()
     }
-    this.updateMotoEvent();
+      this.updateMotoEvent();
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    this.setState({ motorcycleId: selectedOption.value });
+    this.addOrUpdate();
   };
 
   deleteMotoEvent = (e) => {
@@ -89,9 +92,9 @@ class MotorcycleForm extends React.Component {
         className="moto-select col-10"
         value={selectedOption}
         defaultValue={selectedOption}
-        onChange={this.handleChange}
         options={options}
         isSearchable
+        onChange={this.handleChange}
         />
         {buttons()}
       </div>
