@@ -1,6 +1,8 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
-import './Map.scss'
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import './Map.scss';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZXZhbmdkZXNpZ25zIiwiYSI6ImNrNXBnaTg3bjF2a3Izamx2a2x5bWx1MjUifQ.UyhZi1JrgS7xPoUFvv9vuA';
 
@@ -22,6 +24,61 @@ class Map extends React.Component {
       zoom: this.state.zoom
     });
 
+    const draw = new MapboxDraw({
+      // Instead of showing all the draw tools, show only the line string and delete tools
+      displayControlsDefault: false,
+      controls: {
+        line_string: true,
+        trash: true
+      },
+      styles: [
+        // Set the line style for the user-input coordinates
+        {
+          "id": "gl-draw-line",
+          "type": "line",
+          "filter": ["all", ["==", "$type", "LineString"],
+            ["!=", "mode", "static"]
+          ],
+          "layout": {
+            "line-cap": "round",
+            "line-join": "round"
+          },
+          "paint": {
+            "line-color": "#438EE4",
+            "line-dasharray": [0.2, 2],
+            "line-width": 4,
+            "line-opacity": 0.7
+          }
+        },
+        // Style the vertex point halos
+        {
+          "id": "gl-draw-polygon-and-line-vertex-halo-active",
+          "type": "circle",
+          "filter": ["all", ["==", "meta", "vertex"],
+            ["==", "$type", "Point"],
+            ["!=", "mode", "static"]
+          ],
+          "paint": {
+            "circle-radius": 12,
+            "circle-color": "#FFF"
+          }
+        },
+        // Style the vertex points
+        {
+          "id": "gl-draw-polygon-and-line-vertex-active",
+          "type": "circle",
+          "filter": ["all", ["==", "meta", "vertex"],
+            ["==", "$type", "Point"],
+            ["!=", "mode", "static"]
+          ],
+          "paint": {
+            "circle-radius": 8,
+            "circle-color": "#438EE4",
+          }
+        },
+      ]
+    });
+
     // Add geolocate control to the map.
     map.addControl(
       new mapboxgl.GeolocateControl({
@@ -31,6 +88,8 @@ class Map extends React.Component {
         trackUserLocation: true
       })
     );
+    // Add the draw tool to the map
+    map.addControl(draw);
 
     map.on('move', () => {
       this.setState({
@@ -42,6 +101,7 @@ class Map extends React.Component {
   }
 
   render() {
+
     return (
       <div className="Map">
         <div className='sidebarStyle'>
