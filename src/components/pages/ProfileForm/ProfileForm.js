@@ -9,6 +9,7 @@ import './ProfileForm.scss';
 class ProfileForm extends React.Component {
   static propTypes = {
     routerMaker: PropTypes.func,
+    updateProfileEvent: PropTypes.func,
   }
 
   state = {

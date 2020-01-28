@@ -56,14 +56,16 @@ class MotorcycleForm extends React.Component {
     const { motorcycle } = this.props;
     if (motorcycle === 0) {
       this.addMotoEvent()
-    }
+    } else {
       this.updateMotoEvent();
+    }
   }
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    this.setState({ motorcycleId: selectedOption.value });
-    this.addOrUpdate();
+    this.setState({ motorcycleId: selectedOption.value }, () => {
+      this.addOrUpdate();
+    })
   };
 
   deleteMotoEvent = (e) => {
