@@ -74,7 +74,6 @@ class FormComp extends React.Component {
         </div>
         <button className="add-moto btn btn-link" onClick={ this.addMotoEvent }>ADD MOTORCYCLE</button>
       </div>
-
     );
   }
 }
