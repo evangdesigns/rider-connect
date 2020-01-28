@@ -22,13 +22,32 @@
 }
 
 .marker {
-  background-image: url('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png');
-  background-size: cover;
+  background-image: url('../../../images/poi_icon.png');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
   background-position: center center;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: 0;
   cursor: pointer;
+  position: relative;
+}
+.mapboxgl-user-location-dot {
+  background-image: url('../../../images/placementIcon.png');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  border-radius:0;
+  width: 70px;
+  height: 70px;
+}
+.mapboxgl-user-location-dot::before {
+  display: none;
+}
+.mapboxgl-user-location-dot::after {
+  display: none;
 }
 
 .mapboxgl-control-container {
