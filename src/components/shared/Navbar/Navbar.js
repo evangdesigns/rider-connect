@@ -24,9 +24,6 @@ class Navbar extends React.Component {
         return (
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/routes/add" onClick={this.props.toggelSidebar}>+ ROUTE</Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/profile" onClick={this.props.toggelSidebar}>PROFILE</Link>
             </li>
             <li className="nav-item">

@@ -1,20 +1,22 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
+
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
+
+import mapData from '../../../helpers/data/mapData';
+
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import './Map.scss';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZXZhbmdkZXNpZ25zIiwiYSI6ImNrNXBnaTg3bjF2a3Izamx2a2x5bWx1MjUifQ.UyhZi1JrgS7xPoUFvv9vuA';
 
 class Map extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       lng: -86.725990,
       lat: 36.127850,
-      zoom: 14.5
-    };
-  }
+      zoom: 14.5,
+      coord: {},
+  };
 
   componentDidMount() {
     const map = new mapboxgl.Map({
@@ -25,14 +27,12 @@ class Map extends React.Component {
     });
 
     const draw = new MapboxDraw({
-      // Instead of showing all the draw tools, show only the line string and delete tools
-      displayControlsDefault: false,
+      displayControlsDefault: true,
       controls: {
         line_string: true,
         trash: true
       },
       styles: [
-        // Set the line style for the user-input coordinates
         {
           "id": "gl-draw-line",
           "type": "line",
@@ -44,26 +44,12 @@ class Map extends React.Component {
             "line-join": "round"
           },
           "paint": {
-            "line-color": "#438EE4",
+            "line-color": "#BB0004",
             "line-dasharray": [0.2, 2],
             "line-width": 4,
             "line-opacity": 0.7
           }
         },
-        // Style the vertex point halos
-        {
-          "id": "gl-draw-polygon-and-line-vertex-halo-active",
-          "type": "circle",
-          "filter": ["all", ["==", "meta", "vertex"],
-            ["==", "$type", "Point"],
-            ["!=", "mode", "static"]
-          ],
-          "paint": {
-            "circle-radius": 12,
-            "circle-color": "#FFF"
-          }
-        },
-        // Style the vertex points
         {
           "id": "gl-draw-polygon-and-line-vertex-active",
           "type": "circle",
@@ -73,7 +59,7 @@ class Map extends React.Component {
           ],
           "paint": {
             "circle-radius": 8,
-            "circle-color": "#438EE4",
+            "circle-color": "#bb0004",
           }
         },
       ]
@@ -82,14 +68,12 @@ class Map extends React.Component {
     // Add geolocate control to the map.
     map.addControl(
       new mapboxgl.GeolocateControl({
-        positionOptions: {
-        enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      })
-    );
-    // Add the draw tool to the map
-    map.addControl(draw);
+        displayControlsDefault: true,
+      positionOptions: {
+      enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
 
     map.on('move', () => {
       this.setState({
@@ -98,7 +82,91 @@ class Map extends React.Component {
         zoom: map.getZoom().toFixed(2)
       });
     });
-  }
+
+    map.addControl(draw);
+
+    // Use the coordinates you drew to make the Map Matching API request
+    const updateRoute = () => {
+      // Set the profile
+      var profile = "driving";
+      // Get the coordinates that were drawn on the map
+      var data = draw.getAll();
+      var lastFeature = data.features.length - 1;
+      var coords = data.features[lastFeature].geometry.coordinates;
+      // Format the coordinates
+      var newCoords = coords.join(';')
+      // Set the radius for each coordinate pair to 25 meters
+      var radius = [];
+      coords.forEach(element => {
+        radius.push(25);
+      });
+      getMatch(newCoords, radius, profile);
+    }
+
+    // Make a Map Matching request
+    const getMatch = (coordinates, radius, profile) => {
+      // Separate the radiuses with semicolons
+      var radiuses = radius.join(';')
+      // Create the query
+      var query = 'https://api.mapbox.com/matching/v5/mapbox/' + profile + '/' + coordinates + '?geometries=geojson&radiuses=' + radiuses + '&steps=true&access_token=' + mapboxgl.accessToken;
+
+      mapData.matchRouteRequest(query)
+        .then((data) => {
+          const coords = data.matchings[0].geometry;
+          console.log(coords);
+          // Draw the route on the map
+          addRoute(coords);
+        })
+        .catch((err) => console.error('error from retrieveing map matching data', err));
+    };
+
+    // Draw the Map Matching route as a new layer on the map
+    const addRoute = (coords) => {
+      // If a route is already loaded, remove it
+      if (map.getSource('route')) {
+        map.removeLayer('route')
+        map.removeSource('route')
+      } else {
+        map.addLayer({
+          "id": "route",
+          "type": "line",
+          "source": {
+            "type": "geojson",
+            "data": {
+              "type": "Feature",
+              "properties": {},
+              "geometry": coords
+            }
+          },
+          "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          "paint": {
+            "line-color": "#03AA46",
+            "line-width": 8,
+            "line-opacity": 0.8
+          }
+        });
+      };
+    }
+
+    // If the user clicks the delete draw button, remove the layer if it exists
+    const removeRoute = () => {
+      if (map.getSource('route')) {
+        map.removeLayer('route');
+        map.removeSource('route');
+      } else {
+        return;
+      }
+    }
+
+    map.on('draw.create', updateRoute);
+    map.on('draw.update', updateRoute);
+    map.on('draw.delete', removeRoute);
+
+};//END ComponentDidMount()
+
 
   render() {
 
@@ -109,7 +177,7 @@ class Map extends React.Component {
         </div>
         <div ref={el => this.mapContainer = el} className='mapContainer' />
       </div>
-    )
+    );
   }
 }
 
