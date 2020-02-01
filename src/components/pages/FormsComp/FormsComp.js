@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
+import Profile from '../Profile/Profile';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import MotorcycleForm from '../../shared/MotorcycleForm/MotorcycleForm';
 
@@ -68,6 +69,7 @@ class FormComp extends React.Component {
     return (
       <div className="FormComp">
         <Link className="close-edit btn btn-link" to="/profile"><FontAwesomeIcon icon={faTimes} size="lg" /></Link>
+        {/* <Profile /> */}
         <ProfileForm routerMaker={this.routerMaker} />
         <div className="edit-motorcycles">
         {this.loopMotorcycles()}
