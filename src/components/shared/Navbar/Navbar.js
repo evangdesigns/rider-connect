@@ -7,13 +7,14 @@ import 'firebase/auth';
 class Navbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool,
-    toggelSidebar: PropTypes.func,
+    openSidebar: PropTypes.func,
+    closeSidebar: PropTypes.func,
   }
 
   logMeOut = (e) => {
     e.preventDefault();
     firebase.auth().signOut();
-    this.props.toggelSidebar();
+    this.props.closeSidebar();
   }
 
   render() {
@@ -36,7 +37,7 @@ class Navbar extends React.Component {
       return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link className="nav-link" to="/login" onClick={this.props.toggelSidebar}>LOGIN</Link>
+            <Link className="nav-link" to="/login" onClick={this.props.openSidebar}>LOGIN</Link>
           </li>
         </ul>
       );
@@ -45,7 +46,7 @@ class Navbar extends React.Component {
     return (
       <div className="Navbar">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <Link className="navbar-brand" onClick={this.props.toggelSidebar} to="/">
+          <Link className="navbar-brand" onClick={this.props.closeSidebar} to="/">
             <img src="https://github.com/evangdesigns/rider-connect/blob/master/src/images/riderConnect_navLogo.png?raw=true" width="200" alt="RiderConnect" />
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
