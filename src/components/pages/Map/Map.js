@@ -1,6 +1,7 @@
 import React from 'react';
-import mapboxgl from 'mapbox-gl';
+import firebase from 'firebase/app';
 
+import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
 import mapData from '../../../helpers/data/mapData';
@@ -12,13 +13,33 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZXZhbmdkZXNpZ25zIiwiYSI6ImNrNXBnaTg3bjF2a3Iza
 
 class Map extends React.Component {
   state = {
-      lng: -86.725990,
-      lat: 36.127850,
-      zoom: 14.5,
-      coord: {},
+    authed: false,
+    lng: -86.726002,
+    lat: 36.127709,
+    zoom: 14.5,
+    coord: {},
   };
 
   componentDidMount() {
+    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ authed: true });
+        map.addControl(
+          new mapboxgl.GeolocateControl({
+            positionOptions: {
+              enableHighAccuracy: true
+            },
+            trackUserLocation: true
+          })
+        );
+        // Add the draw tool to the map
+        map.addControl(draw);
+      } else {
+        this.setState({ authed: false });
+        map.removeControl(draw);
+      };
+    });
+
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -27,7 +48,7 @@ class Map extends React.Component {
     });
 
     const draw = new MapboxDraw({
-      displayControlsDefault: true,
+      displayControlsDefault: false,
       controls: {
         line_string: true,
         trash: true
@@ -65,16 +86,6 @@ class Map extends React.Component {
       ]
     });
 
-    // Add geolocate control to the map.
-    map.addControl(
-      new mapboxgl.GeolocateControl({
-        displayControlsDefault: true,
-      positionOptions: {
-      enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    }));
-
     map.on('move', () => {
       this.setState({
         lng: map.getCenter().lng.toFixed(4),
@@ -82,8 +93,6 @@ class Map extends React.Component {
         zoom: map.getZoom().toFixed(2)
       });
     });
-
-    map.addControl(draw);
 
     // Use the coordinates you drew to make the Map Matching API request
     const updateRoute = () => {
@@ -167,9 +176,11 @@ class Map extends React.Component {
 
 };//END ComponentDidMount()
 
+componentWillUnmount() {
+  this.removeListener();
+}
 
   render() {
-
     return (
       <div className="Map">
         <div className='sidebarStyle'>
