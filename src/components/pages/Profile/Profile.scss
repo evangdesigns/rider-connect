@@ -1,18 +1,6 @@
 .Profile {
   text-align: center;
   margin: 10px;
-  .btn {
-    position:absolute;
-    top:0;
-    right:0;
-  }
-  .btn.btn-link {
-    color: #ffffff;
-    &:hover {
-    color: #bb0004;
-    text-decoration: none;
-  }
-}
   .profile-image {
     width:200px;
     border-radius: 50%;

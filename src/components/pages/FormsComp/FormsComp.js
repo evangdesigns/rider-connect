@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 import Profile from '../Profile/Profile';
-import ProfileForm from '../ProfileForm/ProfileForm';
+import UserMotorcycles from '../../pages/UserMotorcycle/UserMotorcycle';
 import MotorcycleForm from '../../shared/MotorcycleForm/MotorcycleForm';
 
 import authData from '../../../helpers/data/authData';
@@ -15,6 +15,7 @@ import './FormsComp.scss';
 
 class FormComp extends React.Component {
   state = {
+    editMode: false,
     motorcycles: [],
     userMotorcycles: [],
   }
@@ -43,6 +44,10 @@ class FormComp extends React.Component {
     }))
   }
 
+  setEditMode = () => {
+    this.setState({ editMode: !this.state.editMode });
+  }
+
   addMotoEvent = () => {
     const { userMotorcycles } = this.state;
     const blankMotorcycle = {
@@ -64,17 +69,31 @@ class FormComp extends React.Component {
     this.props.history.push('/profile')
   }
 
-  render() {
+  renderView = () => {
+    const {editMode} = this.state;
+    if (editMode) {
+      return (
+        <div>
+        <div className="edit-motorcycles">
+          {this.loopMotorcycles()}
+        </div>
+          <button className="add-moto btn btn-link" onClick={ this.addMotoEvent }>ADD MOTORCYCLE</button>
+          <Link className="update-profile btn btn-danger btn-block" to="/profile" onClick={this.setEditMode}>UPDATE PROFILE</Link>
+        </div>
+      );
+    } else {
+      return (<UserMotorcycles/>)
+    }
+  }
 
+  render() {
+    const { editMode } = this.state;
     return (
       <div className="FormComp">
-        <Link className="close-edit btn btn-link" to="/profile"><FontAwesomeIcon icon={faTimes} size="lg" /></Link>
-        {/* <Profile /> */}
-        <ProfileForm routerMaker={this.routerMaker} />
-        <div className="edit-motorcycles">
-        {this.loopMotorcycles()}
-        </div>
-        <button className="add-moto btn btn-link" onClick={ this.addMotoEvent }>ADD MOTORCYCLE</button>
+        {editMode ? <Link className="close-edit btn btn-link" onClick={this.setEditMode} to="/profile"><FontAwesomeIcon icon={faTimes} size="lg" /></Link>
+        : <Link className="open-edit btn btn-link" onClick={this.setEditMode} to="/profile/edit"><FontAwesomeIcon icon={faEdit} size="lg" /></Link>}
+        <Profile />
+        {this.renderView()}
       </div>
     );
   }

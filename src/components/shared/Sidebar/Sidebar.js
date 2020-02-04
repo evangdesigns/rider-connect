@@ -37,8 +37,8 @@ class Sidebar extends React.Component {
       <div className={sidebarClassname}>
           <Switch>
             <PublicRoute path="/login" exact component={Auth} authed={authed} />
-            <PrivateRoute path="/profile" exact component={Profile} authed={authed} />
-            <PrivateRoute path="/profile/edit" exact component={FormsComp} authed={authed} />
+            <PrivateRoute path="/profile" exact component={FormsComp} editMode={false} authed={authed} />
+            <PrivateRoute path="/profile/edit" exact component={FormsComp} editMode={true} authed={authed}/>
             <PrivateRoute path="/routes/new" exact component={RouteForm} authed={authed} coords={coords} clcloseSidebar={this.closeSidebar} />
           </Switch>
       </div>
