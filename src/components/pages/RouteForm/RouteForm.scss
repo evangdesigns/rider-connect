@@ -1,0 +1,12 @@
+label.dv-star-rating-star {
+  i {
+    font-size:24px;
+  }
+}
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: #bb0004;
+  background-color: #bb0004;
+}
+.custom-switch {
+  padding-top: .5rem;
+}

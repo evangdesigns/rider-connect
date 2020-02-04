@@ -16,7 +16,7 @@ class UserMotorcycles extends React.Component {
     this.getData();
   }
 
-  getData =() => {
+  getData = () => {
     motoData.getAllMotorcycles()
       .then((motorcycles) => {
         userMotoData.getUserMotorcyclesByUid(authData.getUid())
@@ -28,7 +28,7 @@ class UserMotorcycles extends React.Component {
   render() {
     const buildMotorcycles = () => {
       const { motorcycles, userMotorcycles } = this.state;
-      return(userMotorcycles.map((userMotorcycle) => {
+      return (userMotorcycles.map((userMotorcycle) => {
         const selectedMotorcycle = motorcycles.find((motorcycle) => motorcycle.id === userMotorcycle.motorcycleId);
         return ((<Motorcycle key={userMotorcycle.id} motorcycle={selectedMotorcycle} />))
       }))

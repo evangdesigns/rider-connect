@@ -15,6 +15,7 @@ class App extends React.Component {
   state = {
     authed: false,
     sidebarOpen: false,
+    coords: {},
   };
 
   componentDidMount() {
@@ -48,18 +49,22 @@ class App extends React.Component {
     }));
   }
 
+  setCoords = (coords) => {
+    this.setState({coords: coords})
+  }
+
   componentWillUnmount() {
     this.removeListener();
   }
   render() {
-    const { authed, sidebarOpen } = this.state;
+    const { authed, sidebarOpen, coords } = this.state;
     return (
       <div className="App">
         <Router>
             <Navbar authed={authed} toggelSidebar={this.toggelSidebar} openSidebar={this.openSidebar} closeSidebar={this.closeSidebar} />
-            <Sidebar isOpen={sidebarOpen} authed={authed} />
+            <Sidebar openSidebar={this.openSidebar} isOpen={sidebarOpen} authed={authed} coords={coords}/>
         </Router>
-        <Map />
+        <Map setCoords={this.setCoords}/>
       </div>
     );
   }

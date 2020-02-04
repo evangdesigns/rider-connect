@@ -5,10 +5,11 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import Auth from '../../pages/Auth/Auth';
 import Profile from '../../pages/Profile/Profile';
 import FormsComp from '../../pages/FormsComp/FormsComp';
+import RouteForm from '../../pages/RouteForm/RouteForm';
 
 import './Sidebar.scss'
 
@@ -23,8 +24,14 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 
 
 class Sidebar extends React.Component {
+  static propTypes = {
+    authed: PropTypes.bool,
+    openSidebar: PropTypes.func,
+    closeSidebar: PropTypes.func,
+  }
+
   render() {
-    const { authed, isOpen } = this.props;
+    const { authed, isOpen, coords } = this.props;
     let sidebarClassname = isOpen ? 'sidebar open' : 'sidebar';
     return (
       <div className={sidebarClassname}>
@@ -32,7 +39,7 @@ class Sidebar extends React.Component {
             <PublicRoute path="/login" exact component={Auth} authed={authed} />
             <PrivateRoute path="/profile" exact component={Profile} authed={authed} />
             <PrivateRoute path="/profile/edit" exact component={FormsComp} authed={authed} />
-            {/* <PrivateRoute path="/route/new" exact component={RouteForm} authed={authed} /> */}
+            <PrivateRoute path="/routes/new" exact component={RouteForm} authed={authed} coords={coords} clcloseSidebar={this.closeSidebar} />
           </Switch>
       </div>
     );
