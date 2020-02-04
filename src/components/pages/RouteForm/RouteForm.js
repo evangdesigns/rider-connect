@@ -56,7 +56,7 @@ class RouteForm extends React.Component {
     mapData.addRoute(newRoute)
       .then()
       .catch((errFromAddRoute) => console.error(errFromAddRoute));
-    closeSidebar();
+    // closeSidebar();
   }
 
   render() {
