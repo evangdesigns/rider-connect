@@ -37,12 +37,10 @@ class Profile extends React.Component {
     const { user } = this.state;
     return (
       <div className="Profile">
-        <Link className="btn btn-link" to="/profile/edit"><FontAwesomeIcon icon={faEdit} size="lg" /></Link>
         <div>
           <img className="profile-image" src={user.photoURL} alt={user.displayName} />
         </div>
         <h3>{user.displayName}</h3>
-        <UserMotorcycles />
       </div>
     );
   }

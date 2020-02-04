@@ -7,11 +7,12 @@
     border-top: .5px solid white;
     border-bottom: .5px solid white;
   }
-  .close-edit {
+  .close-edit, .open-edit {
     position:absolute;
     top:0;
     right:0;
   }
+
   .btn.btn-link {
     color: #ffffff;
     &:hover {
