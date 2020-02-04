@@ -25,5 +25,6 @@ yarn-error.log*
 package-lock.json
 
 src/helpers/apiKeys.json
+src/helpers/mapBoxApi.js
 
 .firebase/
