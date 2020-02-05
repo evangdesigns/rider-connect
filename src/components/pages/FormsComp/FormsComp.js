@@ -40,7 +40,7 @@ class FormComp extends React.Component {
       return ((<MotorcycleForm
         key={userMotorcycle.id}
         uMotoId={userMotorcycle.id}
-        motorcycle={selectedMotorcycle ? selectedMotorcycle : 0} motorcycles={motorcycles} deleteMotorcycle={this.deleteMotorcycle} />))
+        motorcycle={selectedMotorcycle ? selectedMotorcycle : 0} motorcycles={motorcycles} deleteMotorcycle={this.deleteMotorcycle} addMotorcycle={this.addMotorcycle} updateMotorcycle={this.updateMotorcycle}/>))
     }))
   }
 
@@ -59,14 +59,31 @@ class FormComp extends React.Component {
     this.setState(userMotorcycles);
   }
 
+  updateMotorcycle = (motorcycleId) => {
+    const { uMotoId } = this.state;
+    const updatedMotorcycle = {
+      motorcycleId,
+      uid: authData.getUid(),
+    };
+    userMotoData.updateMoto(uMotoId, updatedMotorcycle)
+      .then(() => this.getData())
+      .catch((errFromUpdateMoto) => console.error(errFromUpdateMoto));
+  }
+
+  addMotorcycle = (motorcycleId) => {
+    const motoInfo = {
+      motorcycleId,
+      uid: authData.getUid(),
+    };
+    userMotoData.addMoto(motoInfo)
+      .then(() => this.getData())
+      .catch((errFromAddMoto) => console.error(errFromAddMoto));
+  }
+
   deleteMotorcycle = (userMotorcycleId) => {
     userMotoData.deleteMoto(userMotorcycleId)
       .then(() => this.getData())
       .catch((err) => console.error('error deleting user motorcycle', err));
-  }
-
-  routerMaker = () => {
-    this.props.history.push('/profile')
   }
 
   renderView = () => {

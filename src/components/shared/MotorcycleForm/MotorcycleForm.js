@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import authData from '../../../helpers/data/authData';
 import userMotoData from '../../../helpers/data/userMotorcycleData';
 
@@ -11,6 +11,8 @@ import './MotorcycleForm.scss';
 class MotorcycleForm extends React.Component {
   static propTypes = {
     deleteMotorcycle: PropTypes.func,
+    addMotorcycle: PropTypes.func,
+    updateMotorcycle: PropTypes.func,
   }
 
   state = {
@@ -31,25 +33,14 @@ class MotorcycleForm extends React.Component {
 
   updateMotoEvent = () => {
     const { motorcycleId } = this.state;
-    const { uMotoId } = this.props;
-    const updatedMotorcycle = {
-      motorcycleId,
-      uid: authData.getUid(),
-    };
-    userMotoData.updateMoto(uMotoId, updatedMotorcycle)
-      .then()
-      .catch((errFromUpdateMoto) => console.error(errFromUpdateMoto));
+    const { updateMotorcycle } = this.props;
+    updateMotorcycle(motorcycleId)
   }
 
   addMotoEvent = () => {
     const { motorcycleId } = this.state;
-    const newMotorcycle = {
-      motorcycleId,
-      uid: authData.getUid(),
-    };
-    userMotoData.addMoto(newMotorcycle)
-      .then()
-      .catch((errFromAddMoto) => console.error(errFromAddMoto));
+    const { addMotorcycle } = this.props;
+    addMotorcycle(motorcycleId);
   }
 
   addOrUpdate = () => {
@@ -82,11 +73,9 @@ class MotorcycleForm extends React.Component {
       if (selectedOption != null) {
         if (motorcycleId) {
           return(<div className="update-btn col-2"><button className="btn btn-link" onClick={this.deleteMotoEvent}><FontAwesomeIcon icon={faTrash} size="sm" /></button></div>
-          )} else {
-          return(<button className="update-btn col-2" onClick={this.addMotoEvent}><FontAwesomeIcon icon={faCheck} size="lg" /></button>);
+          )}
         }
       }
-    };
 
     return (
       <div className="Select">
