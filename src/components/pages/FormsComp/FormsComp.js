@@ -40,7 +40,11 @@ class FormComp extends React.Component {
       return ((<MotorcycleForm
         key={userMotorcycle.id}
         uMotoId={userMotorcycle.id}
-        motorcycle={selectedMotorcycle ? selectedMotorcycle : 0} motorcycles={motorcycles} deleteMotorcycle={this.deleteMotorcycle} addMotorcycle={this.addMotorcycle} updateMotorcycle={this.updateMotorcycle}/>))
+        motorcycle={selectedMotorcycle ? selectedMotorcycle : 0}
+        motorcycles={motorcycles}
+        deleteMotorcycle={this.deleteMotorcycle}
+        addMotorcycle={this.addMotorcycle}
+        updateMotorcycle={this.updateMotorcycle}/>))
     }))
   }
 
@@ -59,8 +63,7 @@ class FormComp extends React.Component {
     this.setState(userMotorcycles);
   }
 
-  updateMotorcycle = (motorcycleId) => {
-    const { uMotoId } = this.state;
+  updateMotorcycle = (uMotoId, motorcycleId) => {
     const updatedMotorcycle = {
       motorcycleId,
       uid: authData.getUid(),

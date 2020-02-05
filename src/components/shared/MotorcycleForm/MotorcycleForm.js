@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import authData from '../../../helpers/data/authData';
-import userMotoData from '../../../helpers/data/userMotorcycleData';
 
 import './MotorcycleForm.scss';
 
@@ -33,8 +31,8 @@ class MotorcycleForm extends React.Component {
 
   updateMotoEvent = () => {
     const { motorcycleId } = this.state;
-    const { updateMotorcycle } = this.props;
-    updateMotorcycle(motorcycleId)
+    const { updateMotorcycle, uMotoId } = this.props;
+    updateMotorcycle(uMotoId, motorcycleId);
   }
 
   addMotoEvent = () => {
@@ -45,10 +43,12 @@ class MotorcycleForm extends React.Component {
 
   addOrUpdate = () => {
     const { motorcycle } = this.props;
-    if (motorcycle === 0) {
-      this.addMotoEvent()
-    } else {
+    if (motorcycle !== 0) {
       this.updateMotoEvent();
+      console.log('Im updating')
+    } else {
+      this.addMotoEvent()
+      console.log('Im adding')
     }
   }
 
