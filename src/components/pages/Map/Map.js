@@ -6,11 +6,11 @@ import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
 import mapData from '../../../helpers/data/mapData';
-import token from '../../../helpers/mapBoxApi';
+import mapBoxApi from '../../../helpers/mapBoxApi';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import './Map.scss';
 
-mapboxgl.accessToken = token.token;
+mapboxgl.accessToken = mapBoxApi.token;
 
 class Map extends React.Component {
   static propTypes = {
